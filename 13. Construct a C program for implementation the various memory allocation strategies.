@@ -1,0 +1,26 @@
+#include <stdio.h>
+#define SIZE 5
+void firstFit(int blockSize[], int m, int processSize[], int n) {
+    int allocation[n];
+    for (int i = 0; i < n; i++) allocation[i] = -1;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            if (blockSize[j] >= processSize[i]) {
+                allocation[i] = j;
+                blockSize[j] -= processSize[i];
+                break;
+            }
+    for (int i = 0; i < n; i++) {
+        printf("Process %d -> ", i+1);
+        if (allocation[i] != -1)
+            printf("Block %d\n", allocation[i]+1);
+        else
+            printf("Not Allocated\n");
+    }
+}
+int main() {
+    int blockSize[SIZE] = {100, 500, 200, 300, 600};
+    int processSize[4] = {212, 417, 112, 426};
+    firstFit(blockSize, SIZE, processSize, 4);
+    return 0;
+}
