@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include <string.h>
+struct msg {
+    long type;
+    char text[100];
+};
+int main() {
+    key_t key = ftok("progfile", 65);
+    int msgid = msgget(key, 0666 | IPC_CREAT);
+    struct msg m;
+    if (fork() == 0) {
+        msgrcv(msgid, &m, sizeof(m.text), 1, 0);
+        printf("Child received: %s\n", m.text);
+    } else {
+        m.type = 1;
+        printf("Parent sends: ");
+        fgets(m.text, sizeof(m.text), stdin);
+        msgsnd(msgid, &m, sizeof(m.text), 0);
+        wait(NULL);
+        msgctl(msgid, IPC_RMID, NULL);
+    }
+    return 0;
+}
