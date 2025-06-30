@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <string.h>
+struct { char d[10], f[10][10]; int fc; } dir[10];
+int main() {
+    int dc = 0, ch; char d[10];
+    while (1) {
+        printf("\n1.Dir 2.File 3.List 4.Exit: ");
+        scanf("%d", &ch);
+        if (ch == 1) { printf("Dir: "); scanf("%s", dir[dc].d); dir[dc++].fc = 0; }
+        else if (ch == 2) {
+            printf("Dir: "); scanf("%s", d);
+            for (int i=0;i<dc;i++)
+                if (!strcmp(d, dir[i].d))
+                    scanf("%s", dir[i].f[dir[i].fc++]);
+        }
+        else if (ch == 3) {
+            printf("Dir: "); scanf("%s", d);
+            for (int i=0;i<dc;i++)
+                if (!strcmp(d, dir[i].d))
+                    for (int j=0;j<dir[i].fc;j++) printf("%s\n", dir[i].f[j]);
+        }
+        else break;
+    }
+}
