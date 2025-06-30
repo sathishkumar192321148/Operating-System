@@ -1,0 +1,21 @@
+#include <stdio.h>
+struct P { int id, bt, pr, rt; } p[10];
+int main() {
+    int n, done = 0;
+    printf("No. of processes: "); scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        printf("P%d BT Priority: ", i+1);
+        p[i].id = i+1; scanf("%d %d", &p[i].bt, &p[i].pr);
+        p[i].rt = p[i].bt;
+    }
+    printf("\nExecution: ");
+    while (done < n) {
+        int pos = -1, min = 999;
+        for (int i=0;i<n;i++)
+            if (p[i].rt > 0 && p[i].pr < min) min = p[i].pr, pos = i;
+        if (pos == -1) break;
+        printf("P%d ", p[pos].id);
+        p[pos].rt--;
+        if (p[pos].rt == 0) done++;
+    }
+}
