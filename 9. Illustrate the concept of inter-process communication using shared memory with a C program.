@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <string.h>
+#include <unistd.h>
+int main() {
+    int shmid = shmget(IPC_PRIVATE, 100, IPC_CREAT | 0666);
+    char *str = (char *)shmat(shmid, NULL, 0)
+    if (fork() == 0) {
+        sleep(3);
+        printf("Child reads: %s\n", str);
+    } else {
+        printf("Parent writes: ");
+        fgets(str, 100, stdin);
+        wait(NULL);
+        shmdt(str);
+        shmctl(shmid, IPC_RMID, NULL);
+    }
+    return 0;
+}
