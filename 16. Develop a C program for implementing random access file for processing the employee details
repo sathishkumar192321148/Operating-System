@@ -1,0 +1,15 @@
+#include <stdio.h>
+struct Emp { int id; char name[20]; float sal; };
+int main() {
+    struct Emp e;
+    FILE *f = fopen("emp.dat", "wb+");
+    for (int i=0; i<2; i++) {
+        printf("ID Name Salary: ");
+        scanf("%d %s %f", &e.id, e.name, &e.sal);
+        fwrite(&e, sizeof(e), 1, f);
+    }
+    fseek(f, sizeof(e), SEEK_SET);
+    fread(&e, sizeof(e), 1, f);
+    printf("Record 2 -> ID:%d Name:%s Salary:%.2f\n", e.id, e.name, e.sal);
+    fclose(f);
+}
