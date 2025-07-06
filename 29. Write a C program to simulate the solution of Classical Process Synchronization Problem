@@ -1,0 +1,23 @@
+#include <stdio.h>
+int full = 0, empty = 3, item = 0;
+int main() {
+    int ch;
+    while (1) {
+        printf("\n1.Produce 2.Consume 3.Exit: ");
+        scanf("%d", &ch);
+        if (ch == 1) {
+            if (empty > 0) {
+                item++; full++; empty--;
+                printf("Produced %d\n", item);
+            } else printf("Buffer Full\n");
+        }
+        else if (ch == 2) {
+            if (full > 0) {
+                printf("Consumed %d\n", item);
+                item--; full--; empty++;
+            } else printf("Buffer Empty\n");
+        }
+        else break;
+    }
+    return 0;
+}
