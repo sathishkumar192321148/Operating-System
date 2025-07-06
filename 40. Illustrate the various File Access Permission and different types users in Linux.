@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <unistd.h>
+int main() {
+    int fd = creat("myfile.txt", 0644); // rw-r--r--
+    if (fd < 0) {
+        perror("File creation failed");
+        return 1;
+    }
+    close(fd);
+    if (chmod("myfile.txt", 0754) == 0)
+        printf("Permissions changed to 754 (rwxr-xr--)\n");
+    else
+        perror("chmod failed");
+    return 0;
+}
