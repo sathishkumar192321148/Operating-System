@@ -1,0 +1,20 @@
+#include <stdio.h>
+int main() {
+    int files, i, j, blocks, indexBlock, dataBlock[10];
+    printf("Enter number of files: ");
+    scanf("%d", &files);
+    for (i = 0; i < files; i++) {
+        printf("Enter index block for file %d: ", i + 1);
+        scanf("%d", &indexBlock);
+        printf("Enter number of blocks for file %d: ", i + 1);
+        scanf("%d", &blocks);
+        printf("Enter block numbers: ");
+        for (j = 0; j < blocks; j++)
+            scanf("%d", &dataBlock[j]);
+        printf("\nFile %d => Index Block: %d => Blocks: ", i + 1, indexBlock);
+        for (j = 0; j < blocks; j++)
+            printf("%d ", dataBlock[j]);
+        printf("\n\n");
+    }
+    return 0;
+}
