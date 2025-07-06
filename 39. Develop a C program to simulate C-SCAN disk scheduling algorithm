@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+int cmp(const void *a, const void *b) { return (*(int*)a - *(int*)b); }
+int main() {
+    int r[100], n, i, head, size, pos, t = 0;
+    printf("Requests: "); scanf("%d", &n);
+    for (i = 0; i < n; i++) scanf("%d", &r[i]);
+    printf("Disk size & Head: "); scanf("%d %d", &size, &head);
+    r[n++] = head;
+    qsort(r, n, sizeof(int), cmp);
+    for (i = 0; i < n; i++) if (r[i] == head) { pos = i; break; }
+    printf("Sequence: ");
+    for (i = pos; i < n; i++) { printf("%d ", r[i]); t += abs(head - r[i]); head = r[i]; }
+    if (pos > 0) {
+        t += abs(head - (size - 1)) + (size - 1); head = 0;
+        for (i = 0; i < pos; i++) { printf("%d ", r[i]); t += abs(head - r[i]); head = r[i]; }
+    }
+    printf("\nTotal Seek: %d\nAvg Seek: %.2f\n", t, (float)t / (n - 1));
+    return 0;
+}
