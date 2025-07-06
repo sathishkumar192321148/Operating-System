@@ -1,0 +1,11 @@
+#include <stdio.h>
+int main() {
+    FILE *fp = fopen("file.txt", "w+"); // create or open file for read/write
+    fprintf(fp, "Hello");               // write to file
+    rewind(fp);                         // move pointer to beginning
+    char str[10];
+    fscanf(fp, "%s", str);              // read from file
+    printf("%s\n", str);                // print read data
+    fclose(fp);                         // close file
+    return 0;
+}
