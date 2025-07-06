@@ -1,0 +1,27 @@
+#include <stdio.h>
+int main() {
+    int pages[20], n, frames[3] = {-1, -1, -1}, used[3] = {0}, time = 0, faults = 0;
+    printf("Enter number of pages: ");
+    scanf("%d", &n);
+    printf("Enter page numbers: ");
+    for (int i = 0; i < n; i++) scanf("%d", &pages[i]);
+    for (int i = 0; i < n; i++) {
+        int hit = 0, min = 0;
+        for (int j = 0; j < 3; j++) {
+            if (frames[j] == pages[i]) {
+                hit = 1;
+                used[j] = ++time;
+            }
+        }
+        if (!hit) {
+            for (int j = 1; j < 3; j++)
+                if (used[j] < used[min]) min = j;
+            frames[min] = pages[i];
+            used[min] = ++time;
+            faults++;
+        }
+        printf("Frames: %d %d %d\n", frames[0], frames[1], frames[2]);
+    }
+    printf("Total Page Faults = %d\n", faults);
+    return 0;
+}
