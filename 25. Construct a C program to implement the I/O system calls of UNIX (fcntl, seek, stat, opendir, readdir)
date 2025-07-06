@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <dirent.h>
+int main() {
+    int fd = open("demo.txt", O_CREAT | O_RDWR, 0644);
+    write(fd, "Hello", 5);
+    struct stat st;
+    stat("demo.txt", &st);
+    printf("Size: %ld\n", st.st_size);
+    DIR *d = opendir(".");
+    struct dirent *e;
+    while ((e = readdir(d)))
+        if (e->d_name[0] != '.') printf("%s\n", e->d_name);
+    close(fd); closedir(d);
+    return 0;
+}
