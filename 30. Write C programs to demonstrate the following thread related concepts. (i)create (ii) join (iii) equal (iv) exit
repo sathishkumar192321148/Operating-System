@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <pthread.h>
+void* threadFunc(void* arg) {
+    printf("Thread running with ID: %lu\n", pthread_self());
+    // Check equality with itself (always true)
+    if (pthread_equal(pthread_self(), pthread_self()))
+        printf("Thread ID matches itself (equal)\n");
+    pthread_exit("Thread exited");  // Exit with message
+}
+int main() {
+    pthread_t t1;
+    void* status;
+    // Create
+    pthread_create(&t1, NULL, threadFunc, NULL);
+    printf("Main: Created thread %lu\n", t1);
+    // Join
+    pthread_join(t1, &status);
+    printf("Main: Joined thread, exit status: %s\n", (char*)status);
+    return 0;
+}
