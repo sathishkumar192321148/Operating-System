@@ -1,0 +1,21 @@
+#include <stdio.h>
+int main() {
+    int files, i, j, blocks, start, end, chain[30];
+    printf("Enter number of files: ");
+    scanf("%d", &files);
+    for (i = 0; i < files; i++) {
+        printf("\nFile %d:\n", i + 1);
+        printf("Enter start and end blocks: ");
+        scanf("%d %d", &start, &end);
+        printf("Enter number of blocks: ");
+        scanf("%d", &blocks);
+        printf("Enter block chain: ");
+        for (j = 0; j < blocks; j++)
+            scanf("%d", &chain[j]);
+        printf("File %d => Start: %d, End: %d => Chain: ", i + 1, start, end);
+        for (j = 0; j < blocks; j++)
+            printf("%d -> ", chain[j]);
+        printf("NULL\n");
+    }
+    return 0;
+}
