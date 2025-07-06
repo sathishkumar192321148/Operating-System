@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+int cmp(const void *a, const void *b) { return (*(int*)a - *(int*)b); }
+int main() {
+    int r[100], n, h, i, d, t = 0;
+    printf("Requests: "); scanf("%d", &n);
+    for (i = 0; i < n; i++) scanf("%d", &r[i]);
+    printf("Head pos: "); scanf("%d", &h);
+    printf("Dir (0=left,1=right): "); scanf("%d", &d);
+    r[n++] = h;
+    qsort(r, n, sizeof(int), cmp);
+    int p; for (i = 0; i < n; i++) if (r[i] == h) { p = i; break; }
+    printf("Seq: ");
+    if (d) {
+        for (i = p; i < n; i++) t += abs(h - (h = r[i])), printf("%d ", r[i]);
+        for (i = p - 1; i >= 0; i--) t += abs(h - (h = r[i])), printf("%d ", r[i]);
+    } else {
+        for (i = p; i >= 0; i--) t += abs(h - (h = r[i])), printf("%d ", r[i]);
+        for (i = p + 1; i < n; i++) t += abs(h - (h = r[i])), printf("%d ", r[i]);
+    }
+    printf("\nTotal: %d\nAvg: %.2f\n", t, (float)t / (n - 1));
+    return 0;
+}
