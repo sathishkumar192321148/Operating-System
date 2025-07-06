@@ -1,0 +1,30 @@
+#include <stdio.h>
+int predict(int p[], int f[], int n, int idx) {
+    int far = -1, pos = -1;
+    for (int i = 0; i < 3; i++) {
+        int j;
+        for (j = idx; j < n; j++)
+            if (f[i] == p[j]) break;
+        if (j == n) return i;
+        if (j > far) far = j, pos = i;
+    }
+    return pos;
+}
+int main() {
+    int p[20], f[3] = {-1, -1, -1}, n, i, j, hit, pos, faults = 0;
+    printf("Pages: "); scanf("%d", &n);
+    for (i = 0; i < n; i++) scanf("%d", &p[i]);
+    for (i = 0; i < n; i++) {
+        hit = 0;
+        for (j = 0; j < 3; j++)
+            if (f[j] == p[i]) hit = 1;
+        if (!hit) {
+            pos = (f[0] == -1 || f[1] == -1 || f[2] == -1) ?
+                   (f[0] == -1 ? 0 : f[1] == -1 ? 1 : 2) :
+                   predict(p, f, n, i+1);
+            f[pos] = p[i]; faults++;
+        }
+        printf("Frames: %d %d %d\n", f[0], f[1], f[2]);
+    }
+    printf("Faults: %d\n", faults);
+}
